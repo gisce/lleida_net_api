@@ -1,0 +1,33 @@
+interactions:
+- request:
+    body: '{"user": "a_username", "password": "a_password", "request": "GET_CONFIG_LIST"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['70']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.clickandsign.eu/cs/get_config_list
+  response:
+    body: {string: '{"status":"Success","code":200,"config":[{"status":"enabled","name":"Button
+        signature","config_id":"445"},{"status":"enabled","name":"SMS code signature","config_id":"446"},{"status":"enabled","name":"SMS
+        code and Handwritten signature","config_id":"447"}],"request":"GET_CONFIG_LIST","request_id":95443807}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Headers: ['*']
+      Access-Control-Allow-Methods: ['POST, GET, OPTIONS, DELETE, PUT, HEAD, PATCH,
+          TRACE']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Max-Age: ['1209600']
+      Cache-Control: ['no-store, no-cache, must-revalidate']
+      Connection: [close]
+      Content-Disposition: [inline; filename="response.txt"]
+      Content-type: [text/plain;charset=utf-8]
+      Pragma: [no-cache]
+      Server: ['']
+      Vary: [Accept]
+      X-Content-Type-Options: [nosniff]
+    status: {code: 200, message: ''}
+version: 1
