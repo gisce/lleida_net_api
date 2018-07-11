@@ -2,7 +2,7 @@
 from marshmallow import Schema, fields, post_load
 from munch import Munch
 
-class CS_Response(Munch):
+class Objectify(Munch):
     pass
 
 
