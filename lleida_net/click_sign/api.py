@@ -40,3 +40,12 @@ class CS_API(object):
 
         self.session = requests.Session()
 
+
+    @property
+    def credentials(self):
+        return {
+            'user': self.user,
+            'password': self.password,
+        }
+
+
