@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from .api import CS_API
+from . import serializers as schema
 import os
 
 
