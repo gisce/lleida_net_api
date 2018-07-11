@@ -24,10 +24,11 @@ class Signature(object):
         signature = schema.SignatureSchema().load(data)
 
         if not signature.errors:
-            print (signature.data.file[0].filename)
-            # self.api.post(resource="start_signature")
+            # Use a cleaned_data instead of passed one
+            # It validates and just serializes the accompliant part of the schema
+            clean_passed_data = schema.SignatureSchema().dump(data)
+            return self.api.post(resource="start_signature", json=signature.data)
         else:
-            print (signature)
             raise NotValidSignatureSchemaException(signature.errors)
 
 
