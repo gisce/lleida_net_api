@@ -36,3 +36,48 @@ config = {
 client = Client(**config)
 ```
 
+## Available sections
+
+- [Signature](#signature)
+
+
+### Signature
+
+Section desired to manage the Signatures.
+
+Available methods:
+
+- [start](#signature-start)
+
+#### Signature.Start
+
+```
+encoded_pdf = base64.b64encode(a_pdf.read())
+
+data = {
+    "config_id": 1,
+    "contract_id": "ContractID",
+    "level": [
+        {
+            "level_order": 0,
+            "signatories": [
+                {
+                    "phone": "+34666666666",
+                    "email": "here@iam.com",
+                    "name": "MyName",
+                    "surname": "MySurname"
+                },
+            ]
+        },
+    ],
+    "file": [
+        {
+            "filename": "contract.pdf",
+            "content": encoded_pdf,
+            "file_group": "contract_files"
+        }
+    ]
+}
+
+self.client.signature.start(data)
+```
