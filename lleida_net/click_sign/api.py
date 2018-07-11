@@ -3,6 +3,8 @@
 import logging
 from io import BytesIO
 import requests
+from munch import Munch
+
 
 click_sign_envs = {
     'prod': 'https://api.clickandsign.eu/cs/',
@@ -133,25 +135,25 @@ class CS_API(object):
         response = self.session.request(method=method, url=url, **kwargs)
 
         if download:
-            return {
+            return Munch({
                 'code': response.status_code,
                 'result': BytesIO(response.content),
                 'error': True if response.status_code >= 400 else False,
-            }
+            })
 
         # Handle errors
         if response.status_code >= 400:
-            return {
+            return Munch({
                 'code': response.status_code,
                 'error': True,
                 'message': str(response),
-            }
+            })
         else:
-            return {
+            return Munch({
                 'code': response.status_code,
                 'result': response.json(),
                 'error': False,
-            }
+            })
 
 
     def get(self, resource, **kwargs):
