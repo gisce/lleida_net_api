@@ -134,8 +134,9 @@ class CS_API(object):
         }
 
         response = self.session.request(method=method, url=url, **kwargs)
+        response_content = response.json()
 
-        validate = serializers.ResponseSchema().load(response.json())
+        validate = serializers.ResponseSchema().load(response_content)
         assert not validate.errors, "There are some errors at the response of '{} {}': {}".format(method, resource, validate.errors)
 
         if download:
@@ -155,7 +156,7 @@ class CS_API(object):
         else:
             return Munch({
                 'code': response.status_code,
-                'result': response.json(),
+                'result': response_content,
                 'error': False,
             })
 
