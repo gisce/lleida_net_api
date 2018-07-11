@@ -62,8 +62,9 @@ class CS_API(object):
 
         # Prepare base request API params (user, password, request)
         # see https://api.clickandsign.eu/dtd/clickandsign/v1/es/index.html#overview
+
         kwargs['json'] = {
-            **kwargs['json'],
+            **kwargs.get('json', {}),
             **self.credentials,
             'request': resource.upper(),
         }
