@@ -5,7 +5,6 @@ from munch import Munch
 class Objectify(Munch):
     pass
 
-
 class ResponseSchema(Schema):
     """
     Base response format
@@ -18,7 +17,7 @@ class ResponseSchema(Schema):
 
     @post_load
     def create_model(self, data):
-        return CS_Response(**data)
+        return Objectify(**data)
 
 
 class BytesIO_field(fields.Field):
@@ -34,11 +33,20 @@ class SignatorieSchema(Schema):
     url_redirect = fields.Str()
     # Other user labels
 
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
+
+
 
 class LevelSchema(Schema):
     level_order = fields.Integer(required=True)
     required_signatories_to_complete_level = fields.Integer()
     signatories = fields.Nested(SignatorieSchema, many=True, required=True)
+
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
 
 
 class FileSchema(Schema):
@@ -47,6 +55,10 @@ class FileSchema(Schema):
     file_group = fields.Str(required=True)
     sign_on_landing = fields.Str()
 
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
+
 
 class SignatureSchema(Schema):
     config_id = fields.Integer(required=True)
@@ -54,6 +66,14 @@ class SignatureSchema(Schema):
     level = fields.Nested(LevelSchema, many=True, required=True)
     file = fields.Nested(FileSchema, many=True)
 
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
+
 
 class StartSignatureSchema(ResponseSchema):
     signature = fields.Nested(SignatureSchema, many=False, required=True)
+
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
