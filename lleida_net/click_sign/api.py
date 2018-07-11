@@ -146,19 +146,30 @@ class CS_API(object):
                 'error': True if response.status_code >= 400 else False,
             })
 
+
         # Handle errors
         if response.status_code >= 400:
             return Munch({
                 'code': response.status_code,
                 'error': True,
+                'result': {},
                 'message': str(response),
             })
         else:
-            return Munch({
-                'code': response.status_code,
-                'result': response_content,
-                'error': False,
-            })
+            print (response_content['code'])
+            if response_content['code'] != 200:
+                return Munch({
+                    'code': response_content['code'],
+                    'error': True,
+                    'result': {},
+                    'message': response_content['status'],
+                })
+            else:
+                return Munch({
+                    'code': response.status_code,
+                    'result': response_content,
+                    'error': False,
+                })
 
 
     def get(self, resource, **kwargs):
