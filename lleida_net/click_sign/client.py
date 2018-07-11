@@ -39,13 +39,13 @@ class Client(object):
         # Handle the user
         self.user = user
         if not user:
-            self.user = os.getenv('CS_user')
+            self.user = os.getenv('CS_USER')
         assert self.user, "The user is needed to initialize the Lleida.net Click'n'Sign connection"
 
         # Handle the password
         self.password = password
         if not password:
-            self.password = os.getenv('CS_password')
+            self.password = os.getenv('CS_PASSWORD')
         assert self.password, "The password is needed to initialize the Lleida.net Click'n'Sign connection"
 
         # Handle the env, by default prod
