@@ -3,13 +3,16 @@ from __future__ import (absolute_import)
 import vcr
 import logging
 from expects import expect, raise_error
+import os
+import base64
 
 logging.basicConfig(level=logging.DEBUG)
 
 from lleida_net.click_sign import Client, NotValidSignatureSchemaException
 
-fixtures_path = 'specs/fixtures/client/'
 
+ATTACHMENTS_PATH = os.path.dirname(os.path.realpath(__file__)) + "/attachments"
+fixtures_path = 'specs/fixtures/client/'
 spec_VCR = vcr.VCR(
     record_mode='new',
     cassette_library_dir=fixtures_path
@@ -36,6 +39,9 @@ with description('A new CS client'):
         with context('start'):
             with it('must work as expected'):
                 with spec_VCR.use_cassette('signature_start.yaml'):
+                    with open(ATTACHMENTS_PATH + "/dummy.pdf", "rb") as pdf:
+                        encoded_pdf = base64.b64encode(pdf.read())
+
                     data = {
                         "config_id": 12345,
                         "contract_id": "ContractID",
@@ -55,13 +61,14 @@ with description('A new CS client'):
                         "file": [
                             {
                                 "filename": "contract.pdf",
-                                "content": "{{base64_file_content}}",
+                                "content": encoded_pdf,
                                 "file_group": "contract_files"
                             }
                         ]
                     }
 
                     response = self.client.signature.start(data)
+                    assert response
 
             with it('must handle incorrect signature definitions'):
                 with spec_VCR.use_cassette('signature_start.yaml'):
@@ -71,11 +78,6 @@ with description('A new CS client'):
                             "config_id": 12345,
                             "contract_id": "ContractID",
                             "file": [
-                                {
-                                    "filename": "contract.pdf",
-                                    "content": "{{base64_file_content}}",
-                                    "file_group": "contract_files"
-                                }
                             ]
                         }
 
