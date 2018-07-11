@@ -13,7 +13,7 @@ class ResponseSchema(Schema):
     code = fields.Integer(required=True)
     status = fields.Str(required=True)
     request = fields.Str(required=True)
-    request_id = fields.Str()
+    request_id = fields.Int()
 
     @post_load
     def create_model(self, data):
