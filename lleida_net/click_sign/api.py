@@ -5,7 +5,7 @@ from io import BytesIO
 import requests
 
 click_sign_envs = {
-    'prod': 'https://api.clickandsign.eu/cs',
+    'prod': 'https://api.clickandsign.eu/cs/',
     # 'staging': None,
 }
 
@@ -43,9 +43,51 @@ class CS_API(object):
 
     @property
     def credentials(self):
+        """
+        Return current credentials dict
+        """
         return {
             'user': self.user,
             'password': self.password,
         }
 
+
+    def method(self, method, resource, download=False, **kwargs):
+        """
+        Main method handler
+
+        Fetch the requested URL with the requested action through the Session (with injected credentials) and return a JSON representeation of the response with the resultant code
+        """
+        url = self.url + resource
+
+        # Prepare base request API params (user, password, request)
+        # see https://api.clickandsign.eu/dtd/clickandsign/v1/es/index.html#overview
+        kwargs['json'] = {
+            **kwargs['json'],
+            **self.credentials,
+            'request': resource.upper(),
+        }
+
+        response = self.session.request(method=method, url=url, **kwargs)
+
+        if download:
+            return {
+                'code': response.status_code,
+                'result': BytesIO(response.content),
+                'error': True if response.status_code >= 400 else False,
+            }
+
+        # Handle errors
+        if response.status_code >= 400:
+            return {
+                'code': response.status_code,
+                'error': True,
+                'message': str(response),
+            }
+        else:
+            return {
+                'code': response.status_code,
+                'result': response.json(),
+                'error': False,
+            }
 
