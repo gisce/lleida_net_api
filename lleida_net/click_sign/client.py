@@ -4,6 +4,14 @@ from .api import CS_API
 from . import serializers as schema
 import os
 
+class ClientException(Exception):
+    """Base ClientException exception"""
+    pass
+
+class NotValidSignatureSchemaException(ClientException):
+    """Signature data is not valid"""
+    pass
+
 
 class Signature(object):
     def __init__(self, api):
