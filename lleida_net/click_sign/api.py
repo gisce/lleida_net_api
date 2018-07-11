@@ -5,6 +5,7 @@ from io import BytesIO
 import requests
 from munch import Munch
 
+from . import serializers
 
 click_sign_envs = {
     'prod': 'https://api.clickandsign.eu/cs/',
@@ -133,6 +134,9 @@ class CS_API(object):
         }
 
         response = self.session.request(method=method, url=url, **kwargs)
+
+        validate = serializers.ResponseSchema().load(response.json())
+        assert not validate.errors, "There are some errors at the response of '{} {}': {}".format(method, resource, validate.errors)
 
         if download:
             return Munch({
