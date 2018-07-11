@@ -7,7 +7,7 @@ from munch import Munch
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
-from lleida_net.click_sign import CS_API
+from lleida_net.click_sign import CS_API, serializers
 
 fixtures_path = 'specs/fixtures/click_sign/'
 
@@ -17,7 +17,7 @@ spec_VCR = vcr.VCR(
 )
 
 config = {
-    'user': 'lumina',
+    'user': 'user',
     'password': 'password',
     'environment': 'prod'
 }
@@ -43,18 +43,21 @@ with description('A new CS API'):
                 assert type(self.api.password) == str, "Password format is not the expected (str)"
                 assert self.api.password == self.config['password'], "Password is not the expected one"
 
-                assert type(self.api.environment) == str, "Password format is not the expected (str)"
-                assert self.api.environment == self.config['environment'], "Password is not the expected one"
+                assert type(self.api.environment) == str, "Environment format is not the expected (str)"
+                assert self.api.environment == self.config['environment'], "Environment is not the expected one"
 
 
     with context('config fetch'):
         with it('must work as expected'):
             with spec_VCR.use_cassette('get_config_list.yaml'):
-                request_result = self.api.post("get_config_list")
-                assert request_result['code'] == 200
+                response = self.api.post("get_config_list")
 
-                assert "result" in request_result
-                result = Munch(request_result['result'])
-                assert "config" in result
+                validate = serializers.ResponseSchema().load(response.result)
+                assert not validate.errors, "There must be no errors while validating API response"
+
+                assert response.code == 200, "Response code must be 200"
+                assert "result" in response, "A 'result' must be inside the response"
+                result = Munch(response.result)
+                assert "config" in result, "A 'config' must be inside the result'"
                 config = result.config
                 assert type(config) == list, "Config must be a list of configurations"
