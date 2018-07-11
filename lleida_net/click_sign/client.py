@@ -4,6 +4,13 @@ from .api import CS_API
 import os
 
 
+class Signature(object):
+    def __init__(self, api):
+        self.session = api
+
+    def start(self):
+        pass
+
 class Client(object):
     def __init__(self, user=None, password=None, environment=None):
 
@@ -25,3 +32,6 @@ class Client(object):
             self.environment = environment
 
         self.API = CS_API(user=self.user, password=self.password, environment=self.environment)
+
+        # Prepare API resources
+        self.signature = Signature(self.API)
