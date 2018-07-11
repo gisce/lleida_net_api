@@ -92,3 +92,23 @@ class CS_API(object):
                 'error': False,
             }
 
+
+    def get(self, resource, **kwargs):
+        """
+        GET method, it dispatch a session.get method consuming the desired resource
+        """
+        return self.method(method="GET", resource=resource, **kwargs)
+
+
+    def post(self, resource, **kwargs):
+        """
+        POST method, it dispatch a session.get method consuming the desired resource
+        """
+        return self.method(method="POST", resource=resource, **kwargs)
+
+
+    def download(self, resource, **kwargs):
+        """
+        DOWNLOAD method, it dispatch a session.get method consuming the desired resource in download mode
+        """
+        return self.method(method="GET", resource=resource, download=True, **kwargs)
