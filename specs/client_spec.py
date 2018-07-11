@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import (absolute_import)
 import vcr
-import io
-import csv
-import collections
 import logging
+from expects import expect, raise_error
+
 logging.basicConfig(level=logging.DEBUG)
 
 from lleida_net.click_sign import CS_API
