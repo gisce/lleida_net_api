@@ -15,10 +15,22 @@ class NotValidSignatureSchemaException(ClientException):
 
 class Signature(object):
     def __init__(self, api):
-        self.session = api
+        self.api = api
 
-    def start(self):
-        pass
+    def start(self, data):
+        assert isinstance(data, dict), "Data must be a dict"
+
+        # Validate data
+        signature = schema.SignatureSchema().load(data)
+
+        if not signature.errors:
+            print (signature.data.file[0].filename)
+            # self.api.post(resource="start_signature")
+        else:
+            print (signature)
+            raise NotValidSignatureSchemaException(signature.errors)
+
+
 
 class Client(object):
     def __init__(self, user=None, password=None, environment=None):
