@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 from lleida_net.click_sign import CS_API, serializers
 
-fixtures_path = 'specs/fixtures/click_sign/'
+fixtures_path = 'specs/fixtures/api/'
 
 spec_VCR = vcr.VCR(
     record_mode='new',
