@@ -77,3 +77,25 @@ class StartSignatureSchema(ResponseSchema):
     @post_load
     def create_model(self, data):
         return Objectify(**data)
+
+
+
+"""
+Configuration
+"""
+
+class ConfigSchema(Schema):
+    config_id = fields.Integer(required=True)
+    name = fields.Str(required=True)
+    status = fields.Str(required=True)
+
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
+
+
+class GetConfigListSchema(ResponseSchema):
+    config = fields.Nested(SignatureSchema, many=True, required=True)
+
+    @post_load
+    def create_model(self, data):
