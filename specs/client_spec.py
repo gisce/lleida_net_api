@@ -73,14 +73,13 @@ with description('A new CS client'):
             with it('must handle incorrect signature definitions'):
                 with spec_VCR.use_cassette('signature_start.yaml'):
 
-                    def incorrect_signature_start ():
+                    def incorrect_signature_start():
                         data = {
                             "config_id": 12345,
                             "contract_id": "ContractID",
                             "file": [
                             ]
                         }
-
                         response = self.client.signature.start(data)
 
                     expect(incorrect_signature_start).to(raise_error(NotValidSignatureSchemaException))
@@ -97,7 +96,13 @@ with description('A new CS client'):
 
                     for a_config in config:
                         validate_config = schema.ConfigSchema().load(a_config)
-                        print (a_config)
-                        print (validate_config)
                         assert not validate_config.errors
 
+            with it('must get a config detail'):
+                with spec_VCR.use_cassette('configuration_list.yaml'):
+                    response = self.client.configuration.get_config_list()
+                    config = response.data.result['config']
+                    a_config = schema.ConfigSchema().load(config[0])
+                    config_id = a_config.data.config_id
+                    response = self.client.configuration.get_config(config_id)
+                    print (response)
