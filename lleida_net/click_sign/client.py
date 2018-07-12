@@ -29,6 +29,23 @@ class ClientResource(object):
     def __init__(self, api):
         self.api = api
 
+    def response(self, response, response_schema):
+        """
+        Validates and prepare the response depending on passed schema
+        """
+        # Validate base API Response schema
+        response_object = schema.APIResponseSchema().load(response)
+        print (response_object)
+        if response_object.errors:
+            raise NotValidAPIResponseSchemaException(response_object.errors)
+
+        validation_object = response_schema().load(response_object.data.result)
+        print (validation_object)
+        if validation_object.errors:
+            raise NotValidSchemaException(response_schema, validation_object.errors)
+
+        return validation_object.data
+
 
 class Configuration(ClientResource):
     
