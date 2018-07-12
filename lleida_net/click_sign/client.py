@@ -70,7 +70,7 @@ class Configuration(ClientResource):
         }
 
         try:
-            return self.response(self.api.post(resource="get_config"), response_schema=schema.ConfigDetailSchema)
+            return self.response(self.api.post(resource="get_config", json=config), response_schema=schema.ConfigDetailSchema)
         except Exception as e:
             raise NotValidConfigurationSchemaException(str(e))
 
