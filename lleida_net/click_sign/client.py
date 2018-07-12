@@ -13,6 +13,14 @@ class NotValidSignatureSchemaException(ClientException):
     pass
 
 
+class Configuration(object):
+    def __init__(self, api):
+        self.api = api
+
+    def get_config_list(self):
+        return self.api.post(resource="get_config_list")
+
+
 class Signature(object):
     def __init__(self, api):
         self.api = api
@@ -56,3 +64,4 @@ class Client(object):
 
         # Prepare API resources
         self.signature = Signature(self.API)
+        self.configuration = Configuration(self.API)
