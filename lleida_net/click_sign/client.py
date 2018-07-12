@@ -21,13 +21,12 @@ class Signature(object):
         assert isinstance(data, dict), "Data must be a dict"
 
         # Validate data
-        signature = schema.SignatureSchema().load(data)
+        signature_schema = schema.SignatureSchema().load(data)
 
-        if not signature.errors:
-            # Use a cleaned_data instead of passed one
-            # It validates and just serializes the accompliant part of the schema
-            clean_passed_data = schema.SignatureSchema().dump(data)
-            return self.api.post(resource="start_signature", json=signature.data)
+        if not signature_schema.errors:
+            signature = schema.StartSignatureSchema().dump({"signature": data}).data
+            # return signature
+            return self.api.post(resource="start_signature", json=signature)
         else:
             raise NotValidSignatureSchemaException(signature.errors)
 
