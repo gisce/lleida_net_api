@@ -27,6 +27,30 @@ class BytesIO_field(fields.Field):
         return value
 
 
+
+"""
+API response
+"""
+
+class APIResponseSchema(Schema):
+    """
+    API Response schema
+    """
+    code = fields.Integer(required=True)
+    error = fields.Boolean(required=True)
+    result = fields.Dict(required=True)
+    message = fields.Str(required=False)
+
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
+
+
+
+"""
+Signature
+"""
+
 class SignatorieSchema(Schema):
     phone = fields.Str()
     email = fields.Str()
@@ -36,7 +60,6 @@ class SignatorieSchema(Schema):
     @post_load
     def create_model(self, data):
         return Objectify(**data)
-
 
 
 class LevelSchema(Schema):
@@ -99,3 +122,4 @@ class GetConfigListSchema(ResponseSchema):
 
     @post_load
     def create_model(self, data):
+        return Objectify(**data)
