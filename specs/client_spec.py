@@ -8,7 +8,7 @@ import base32hex
 
 logging.basicConfig(level=logging.DEBUG)
 
-from lleida_net.click_sign import Client, NotValidSignatureSchemaException
+from lleida_net.click_sign import Client, NotValidSignatureSchemaException, serializers as schema
 
 
 ATTACHMENTS_PATH = os.path.dirname(os.path.realpath(__file__)) + "/attachments"
