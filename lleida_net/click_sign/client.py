@@ -12,6 +12,10 @@ class NotValidSignatureSchemaException(ClientException):
     """Signature data is not valid"""
     pass
 
+class NotValidConfigurationSchemaException(ClientException):
+    """Configuration data is not valid"""
+    pass
+
 
 class Configuration(object):
     def __init__(self, api):
@@ -42,7 +46,7 @@ class Signature(object):
             # return signature
             return self.api.post(resource="start_signature", json=signature)
         else:
-            raise NotValidSignatureSchemaException(signature.errors)
+            raise NotValidSignatureSchemaException(signature_schema.errors)
 
 
 
