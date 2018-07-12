@@ -47,17 +47,17 @@ class ClientResource(object):
         return validation_object.data
 
 
+
+
+
 class Configuration(ClientResource):
-    
+
     def get_config_list(self):
         """
         Return the result of the Config List request if no errors appears
         """
         try:
-            response = self.api.post(resource="get_config_list")
-            response_object = schema.APIResponseSchema().load(response)
-            assert not response_object.errors
-            return response_object
+            return self.response(self.api.post(resource="get_config_list"), response_schema=schema.GetConfigListSchema)
         except Exception as e:
             raise NotValidConfigurationSchemaException(str(e))
 
