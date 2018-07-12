@@ -74,6 +74,27 @@ class Configuration(ClientResource):
         except Exception as e:
             raise NotValidConfigurationSchemaException(str(e))
 
+    def set_config(self, data):
+        """
+        Set new config
+        """
+        assert isinstance(data, dict), "Data must be a dict"
+
+        config = {
+            'config': data,
+        }
+
+        # Validate passed data
+        data_schema = schema.ConfigDetailSchema().load(config)
+        print (data_schema)
+        if not data_schema.errors:
+            try:
+                # return self.response(self.api.post(resource="get_config", json=config), response_schema=schema.ConfigDetailSchema)
+                return self.api.post(resource="set_config", json=config)
+            except Exception as e:
+                raise NotValidConfigurationSchemaException(str(e))
+        return False
+
 
 class Signature(ClientResource):
 
