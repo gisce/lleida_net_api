@@ -22,6 +22,9 @@ class Configuration(object):
         self.api = api
 
     def get_config_list(self):
+        """
+        Return the result of the Config List request if no errors appears
+        """
         try:
             response = self.api.post(resource="get_config_list")
             response_object = schema.APIResponseSchema().load(response)
@@ -29,6 +32,25 @@ class Configuration(object):
             return response_object
         except Exception as e:
             raise NotValidConfigurationSchemaException(str(e))
+
+    def get_config(self, config_id):
+        """
+        Return the detail of the requested config
+        """
+        assert type(config_id) == int, "Provided config_id is not correct '{}'".format(config_id)
+
+        config = {
+            'config_id': config_id,
+        }
+
+        try:
+            response = self.api.post(resource="get_config", json=config)
+            response_object = schema.APIResponseSchema().load(response)
+            assert not response_object.errors
+            return response_object
+        except Exception as e:
+            raise NotValidConfigurationSchemaException(str(e))
+
 
 
 class Signature(object):
