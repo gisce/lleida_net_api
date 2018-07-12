@@ -89,20 +89,19 @@ with description('A new CS client'):
             with it('must handle config lists'):
                 with spec_VCR.use_cassette('configuration_list.yaml'):
                     response = self.client.configuration.get_config_list()
-                    assert not response.errors, "Get config list must be resolved without errors"
-                    assert not response.data.error and response.data.result['code'] == 200, "Get config list application status must be OK"
+                    assert response and response.code == 200, "Get config list application status must be OK"
 
-                    config = response.data.result['config']
+                    config = response.config
                     assert type(config) == list and len(config)>0, "Returning config must be a non-empty list"
 
                     for a_config in config:
                         validate_config = schema.ConfigSchema().load(a_config)
                         assert not validate_config.errors
 
-            with it('must get a config detail'):
+            with it('must get config detail as expected'):
                 with spec_VCR.use_cassette('configuration_list.yaml'):
                     response = self.client.configuration.get_config_list()
-                    config = response.data.result['config']
+                    config = response.config
                     a_config = schema.ConfigSchema().load(config[0])
                     config_id = a_config.data.config_id
                     response = self.client.configuration.get_config(config_id)
