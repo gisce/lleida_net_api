@@ -17,10 +17,13 @@ class NotValidConfigurationSchemaException(ClientException):
     pass
 
 
-class Configuration(object):
+class ClientResource(object):
     def __init__(self, api):
         self.api = api
 
+
+class Configuration(ClientResource):
+    
     def get_config_list(self):
         """
         Return the result of the Config List request if no errors appears
@@ -53,9 +56,7 @@ class Configuration(object):
 
 
 
-class Signature(object):
-    def __init__(self, api):
-        self.api = api
+class Signature(ClientResource):
 
     def start(self, data):
         assert isinstance(data, dict), "Data must be a dict"
