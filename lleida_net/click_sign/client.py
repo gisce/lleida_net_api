@@ -47,9 +47,6 @@ class ClientResource(object):
         return validation_object.data
 
 
-
-
-
 class Configuration(ClientResource):
 
     def get_config_list(self):
@@ -72,13 +69,9 @@ class Configuration(ClientResource):
         }
 
         try:
-            response = self.api.post(resource="get_config", json=config)
-            response_object = schema.APIResponseSchema().load(response)
-            assert not response_object.errors
-            return response_object
+            return self.response(self.api.post(resource="get_config"), response_schema=schema.ConfigDetailSchema)
         except Exception as e:
             raise NotValidConfigurationSchemaException(str(e))
-
 
 
 class Signature(ClientResource):
