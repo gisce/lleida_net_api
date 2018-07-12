@@ -175,7 +175,6 @@ class ConfigInfoSchema(Schema):
 
 
 class ConfigDetailSchema(Schema):
-    config_id = fields.Integer(required=True)
     config = fields.Nested(ConfigInfoSchema)
 
     @post_load
