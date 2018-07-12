@@ -26,6 +26,7 @@ class NotValidConfigurationSchemaException(NotValidSchemaException):
 
 
 class ClientResource(object):
+
     def __init__(self, api):
         self.api = api
 
@@ -35,12 +36,12 @@ class ClientResource(object):
         """
         # Validate base API Response schema
         response_object = schema.APIResponseSchema().load(response)
-        print (response_object)
+        # print (response_object)
         if response_object.errors:
             raise NotValidAPIResponseSchemaException(response_object.errors)
 
         validation_object = response_schema().load(response_object.data.result)
-        print (validation_object)
+        # print (validation_object)
         if validation_object.errors:
             raise NotValidSchemaException(response_schema, validation_object.errors)
 
