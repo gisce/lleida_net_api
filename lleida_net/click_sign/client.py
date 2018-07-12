@@ -8,11 +8,19 @@ class ClientException(Exception):
     """Base ClientException exception"""
     pass
 
-class NotValidSignatureSchemaException(ClientException):
+class NotValidSchemaException(ClientException):
     """Signature data is not valid"""
     pass
 
-class NotValidConfigurationSchemaException(ClientException):
+class NotValidAPIResponseSchemaException(NotValidSchemaException):
+    """Signature data is not valid"""
+    pass
+
+class NotValidSignatureSchemaException(NotValidSchemaException):
+    """Signature data is not valid"""
+    pass
+
+class NotValidConfigurationSchemaException(NotValidSchemaException):
     """Configuration data is not valid"""
     pass
 
