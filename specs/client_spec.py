@@ -4,7 +4,7 @@ import vcr
 import logging
 from expects import expect, raise_error
 import os
-import base64
+import base32hex
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -40,7 +40,7 @@ with description('A new CS client'):
             with it('must work as expected'):
                 with spec_VCR.use_cassette('signature_start.yaml'):
                     with open(ATTACHMENTS_PATH + "/dummy.pdf", "rb") as pdf:
-                        encoded_pdf = base64.b64encode(pdf.read())
+                        encoded_pdf = base32hex.b32encode(pdf.read())
 
                     data = {
                         "config_id": 12345,
