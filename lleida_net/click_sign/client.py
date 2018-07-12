@@ -18,7 +18,13 @@ class Configuration(object):
         self.api = api
 
     def get_config_list(self):
-        return self.api.post(resource="get_config_list")
+        try:
+            response = self.api.post(resource="get_config_list")
+            response_object = schema.APIResponseSchema().load(response)
+            assert not response_object.errors
+            return response_object
+        except Exception as e:
+            raise NotValidConfigurationSchemaException(str(e))
 
 
 class Signature(object):
