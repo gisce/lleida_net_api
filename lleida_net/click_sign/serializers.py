@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, validate
 from munch import Munch
 
 class Objectify(Munch):
@@ -209,9 +209,23 @@ class GetConfigListSchema(ResponseSchema):
 
 
 
+
 """
 Callback
 """
+
+# Possible signature status, see https://api.clickandsign.eu/dtd/clickandsign/v1/en/index.html#signature_status
+signature_status_list = [
+    "new",
+    "ready",
+    "signed",
+    "expired",
+    "failed",
+    "cancelled",
+    "otp_max_retries",
+    "severally_level_completed",
+    "evidence_generated",
+]
 
 class CallbackSchema(Schema):
     """
@@ -222,7 +236,10 @@ class CallbackSchema(Schema):
     signature_id = fields.Integer(required=True)
     signatory_id = fields.Integer(required=True)
     contract_id = fields.Str(required=True)
-    status = fields.Str(required=True)
+    status = fields.Str(
+        required=True,
+        validate=validate.OneOf(signature_status_list)
+    )
     status_date = fields.Str(required=True)
 
     @post_load
