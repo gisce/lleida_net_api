@@ -28,6 +28,7 @@ class BytesIO_field(fields.Field):
 
 
 
+
 """
 API response
 """
@@ -44,6 +45,7 @@ class APIResponseSchema(Schema):
     @post_load
     def create_model(self, data):
         return Objectify(**data)
+
 
 
 
@@ -106,8 +108,6 @@ class StartSignatureSchema(ResponseSchema):
 """
 Configuration
 """
-
-
 
 class SMSSchema(Schema):
     registered = fields.Str()
@@ -202,6 +202,28 @@ class GetConfigListSchema(ResponseSchema):
 
 class GetConfigListSchema(ResponseSchema):
     config = fields.Nested(ConfigSchema, many=True, required=True)
+
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
+
+
+
+"""
+Callback
+"""
+
+class CallbackSchema(Schema):
+    """
+    Implements the schema related to a Callback
+
+    See https://api.clickandsign.eu/dtd/clickandsign/v1/en/index.html#callback
+    """
+    signature_id = fields.Integer(required=True)
+    signatory_id = fields.Integer(required=True)
+    contract_id = fields.Str(required=True)
+    status = fields.Str(required=True)
+    status_date = fields.Str(required=True)
 
     @post_load
     def create_model(self, data):
