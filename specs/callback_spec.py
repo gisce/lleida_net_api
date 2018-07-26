@@ -31,7 +31,7 @@ with description('A new Callback'):
                 }
 
                 validate = serializers.CallbackSchema().load(callback['data'])
-                assert not validate.errors, "There must be no errors while validating API response"
+                assert not validate.errors, "There must be no errors while validating API response: {}".format(validate.errors)
 
         with it('must handle incorrect schema'):
             with spec_VCR.use_cassette('callback.yaml'):
@@ -42,11 +42,12 @@ with description('A new Callback'):
                             "signature_id": "not_an_integer",
                             "signatory_id": "not_an_integer",
                             "contract_id": "Contract101",
-                            "status": "evidence_generated",
+                            "status": "inexistent status",
                             "status_date": "1522111485"
                         }
                     }
                     validate = serializers.CallbackSchema().load(callback['data'])
-                    assert not validate.errors, "There must be no errors while validating API response"
+                    assert not validate.errors, "There must be no errors while validating API response: {}".format(validate.errors)
+                    assert len(validate.error) == 3, "both sign* ids and status must be incorrect (3 errors vs '{}')".format(len(validate.error))
 
                 expect(incorrect_schema).to(raise_error(AssertionError))
