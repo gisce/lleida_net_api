@@ -6,11 +6,11 @@ from setuptools import setup, find_packages
 with io.open('lleida_net/__init__.py', 'rt', encoding='utf8') as f:
     version = re.search(r'__version__ = \'(.*?)\'', f.read()).group(1)
 
-with open(f'requirements.txt', 'r') as f:
+with open('requirements.txt', 'r') as f:
     INSTALL_REQUIRES = f.readlines()
 
 try:
-    with open(f'requirements-dev.txt', 'r') as f:
+    with open('requirements-dev.txt', 'r') as f:
         TESTS_REQUIRE = f.readlines()
 except:
         TESTS_REQUIRE = None
