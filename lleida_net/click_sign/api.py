@@ -135,14 +135,12 @@ class CS_API(object):
         }
         """
 
-        kwargs[u'json'].update(
-            **kwargs.get(u'json', {})
-        )
-        kwargs[u'json'].update(
+        kwargs['json'] = kwargs.get(u'json', {})
+        kwargs['json'].update(
             **self.credentials
         )
-        kwargs[u'json'].update(
-            {u'request': resource.upper()}
+        kwargs['json'].update(
+            {'request': resource.upper()}
         )
 
         response = self.session.request(method=method, url=url, **kwargs)
