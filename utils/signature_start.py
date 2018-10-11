@@ -1,5 +1,8 @@
-from __future__ import (division, absolute_import, print_function, unicode_literals
-import six.moves.urllib as urllib 
+from __future__ import (division, absolute_import, print_function, unicode_literals)
+
+from six.moves import urllib
+
+
 import os
 import base64
 
