@@ -111,9 +111,22 @@ class Signature(ClientResource):
         else:
             raise NotValidSignatureSchemaException(signature_schema.errors)
 
+    @property
+    def list(self):
+        try:
+            return self.api.post(resource="get_signature_list", json={ "start_date": 1517443200})
+        except Exception as e:
+            raise NotValidSignatureSchemaException(str(e))
+
+
+
+
+
+
 
 
 class Client(object):
+    
     def __init__(self, user=None, password=None, environment=None):
 
         # Handle the user
