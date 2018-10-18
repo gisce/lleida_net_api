@@ -5,7 +5,7 @@ import io
 from munch import Munch
 
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.CRITICAL)
 
 from lleida_net.click_sign import CS_API, serializers
 
