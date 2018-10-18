@@ -1,0 +1,76 @@
+interactions:
+- request:
+    body: '{"user": "user", "password": "password", "request": "GET_CONFIG_LIST"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['70']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.clickandsign.eu/cs/get_config_list
+  response:
+    body: {string: '{"config":[{"config_id":"445","name":"Button signature","status":"enabled"},{"config_id":"446","name":"SMS
+        code signature","status":"enabled"},{"config_id":"447","name":"SMS code and
+        Handwritten signature","status":"enabled"},{"config_id":"476","name":"Button
+        signature","status":"enabled"},{"config_id":"478","name":"Button signature","status":"enabled"}],"request":"GET_CONFIG_LIST","code":200,"request_id":18518943,"status":"Success"}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Headers: ['*']
+      Access-Control-Allow-Methods: ['POST, GET, OPTIONS, DELETE, PUT, HEAD, PATCH,
+          TRACE']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Max-Age: ['1209600']
+      Cache-Control: ['no-store, no-cache, must-revalidate']
+      Connection: [close]
+      Content-Disposition: [inline; filename="response.txt"]
+      Content-type: [text/plain;charset=utf-8]
+      Pragma: [no-cache]
+      Server: ['']
+      Vary: [Accept]
+      X-Content-Type-Options: [nosniff]
+    status: {code: 200, message: ''}
+- request:
+    body: '{"config_id": 445, "user": "user", "password": "password", "request": "GET_CONFIG"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['83']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.clickandsign.eu/cs/get_config
+  response:
+    body: {string: "{\"status\":\"Success\",\"config_id\":\"445\",\"request_id\":72534318,\"code\":200,\"config\":{\"landing\":{\"landing_template\":\"\",\"default_url_redirect\":\"\",\"signature_type\":\"on_sign\",\"signature_on_sign_required_elements\":{\"handwritten\":\"N\",\"otp_length\":\"6\",\"otp_max_retries\":\"3\",\"otp_sending\":\"on_landing\",\"otp\":\"N\"},\"url_redirect_delay\":\"-1\"},\"name\":\"Button
+        signature\",\"signature_cb_url\":\"\",\"color_background\":\"\",\"registered_company_vat_number\":\"B55314041\",\"email\":[{\"body_template\":\"\",\"attachment_file_group\":[],\"reminder_lapse\":\"0\",\"subject\":\"Tienes
+        un nuevo documento para firmar\",\"registered\":\"Y\",\"bcc\":\"\",\"cc\":\"\",\"from_name\":\"COMPANY
+        S.L.\",\"to\":\"SIGNATORY\",\"body_free_text\":\"\",\"type\":\"start\"},{\"body_template\":\"\",\"attachment_file_group\":[\"SIGNATORY_STAMP\",\"SIGNATORY_EVIDENCE\"],\"reminder_lapse\":\"0\",\"subject\":\"\xA1Felicidades!
+        Tu documento ha sido firmado\",\"registered\":\"N\",\"bcc\":\"\",\"cc\":\"\",\"from_name\":\"COMPANY
+        S.L.\",\"to\":\"SIGNATORY\",\"body_free_text\":\"\",\"type\":\"signed\"},{\"body_template\":\"\",\"attachment_file_group\":[],\"reminder_lapse\":\"0\",\"subject\":\"\xA1Felicidades!
+        Tu documento ha sido firmado\",\"registered\":\"N\",\"bcc\":\"\",\"cc\":\"\",\"from_name\":\"COMPANY
+        S.L.\",\"to\":\"SIGNATORY\",\"body_free_text\":\"\",\"type\":\"end_ok\"},{\"body_template\":\"\",\"attachment_file_group\":[],\"reminder_lapse\":\"0\",\"subject\":\"No
+        ha sido posible firmar el documento\",\"registered\":\"N\",\"bcc\":\"\",\"cc\":\"\",\"from_name\":\"COMPANY
+        S.L.\",\"to\":\"SIGNATORY\",\"body_free_text\":\"\",\"type\":\"end_ko\"},{\"body_template\":\"\",\"attachment_file_group\":[],\"reminder_lapse\":\"0\",\"subject\":\"El
+        documento para firmar ha expirado\",\"registered\":\"N\",\"bcc\":\"\",\"cc\":\"\",\"from_name\":\"COMPANY
+        S.L.\",\"to\":\"SIGNATORY\",\"body_free_text\":\"\",\"type\":\"expired\"}],\"registered_company_name\":\"COMPANY
+        S.L.\",\"registered_langs\":\"ES\",\"sms\":[],\"logo_url\":\"https://admin.clickandsign.eu/pdf/2231782qw8a7dasd87ads87-\",\"lang\":\"ES\",\"color_button_text\":\"\",\"status\":\"enabled\",\"signatory_tags\":[],\"color_button_background\":\"\",\"expire_lapse\":\"720\",\"color_text\":\"\",\"auto_cancel\":\"N\",\"signatory_cb_url\":\"\",\"default_sms_sender\":\"Click&Sign\",\"logo\":25886,\"default_email_from_name\":\"COMPANY
+        S.L.\"},\"request\":\"GET_CONFIG\"}"}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Headers: ['*']
+      Access-Control-Allow-Methods: ['POST, GET, OPTIONS, DELETE, PUT, HEAD, PATCH,
+          TRACE']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Max-Age: ['1209600']
+      Cache-Control: ['no-store, no-cache, must-revalidate']
+      Connection: [close]
+      Content-Disposition: [inline; filename="response.txt"]
+      Content-type: [text/plain;charset=utf-8]
+      Pragma: [no-cache]
+      Server: ['']
+      Vary: [Accept]
+      X-Content-Type-Options: [nosniff]
+    status: {code: 200, message: ''}
+version: 1
