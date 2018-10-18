@@ -11,8 +11,8 @@ jobs:
   test-3.6: &test-template
     docker:
       - image: circleci/python:3.6
-        environment:
-          PYTHON_VERSION: 3.6
+    environment:
+      PYTHON_VERSION: 3.6
 
     working_directory: ~/repo
 
@@ -57,11 +57,11 @@ jobs:
     <<: *test-template
     docker:
       - image: circleci/python:3.7
-        environment:
-          PYTHON_VERSION: 3.7
+    environment:
+      PYTHON_VERSION: 3.7
   test-2.7:
     <<: *test-template
     docker:
       - image: circleci/python:2.7
-        environment:
-          PYTHON_VERSION: 2.7
+    environment:
+      PYTHON_VERSION: 2.7
