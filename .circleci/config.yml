@@ -11,6 +11,8 @@ jobs:
   test-3.6: &test-template
     docker:
       - image: circleci/python:3.6
+        environment:
+          PYTHON_VERSION: 3.6
 
     working_directory: ~/repo
 
@@ -20,6 +22,7 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "requirements.txt" }}-{{.Environment.PYTHON_VERSION}}
+          - v1-dependencies-
 
       - run:
           name: install dependencies
@@ -54,7 +57,11 @@ jobs:
     <<: *test-template
     docker:
       - image: circleci/python:3.7
+        environment:
+          PYTHON_VERSION: 3.7
   test-2.7:
     <<: *test-template
     docker:
       - image: circleci/python:2.7
+        environment:
+          PYTHON_VERSION: 2.7
