@@ -19,7 +19,7 @@ jobs:
 
       - restore_cache:
           keys:
-          - v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "requirements.txt" }}
+          - v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements-dev.txt" }}
 
       - run:
           name: install dependencies
@@ -32,7 +32,7 @@ jobs:
       - save_cache:
           paths:
             - ./venv
-          key: v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "requirements.txt" }}
+          key: v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements-dev.txt" }}
         
       - run:
           name: run tests
