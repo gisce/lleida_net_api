@@ -11,8 +11,6 @@ jobs:
   test-3.6: &test-template
     docker:
       - image: circleci/python:3.6
-    environment:
-      PYTHON_VERSION: 3.6
 
     working_directory: ~/repo
 
@@ -21,7 +19,7 @@ jobs:
 
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "requirements.txt" }}-{{.Environment.PYTHON_VERSION}}
+          - v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "requirements.txt" }}
           - v1-dependencies-
 
       - run:
@@ -35,7 +33,7 @@ jobs:
       - save_cache:
           paths:
             - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}-{{.Environment.PYTHON_VERSION}}
+          key: v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "requirements.txt" }}
         
       - run:
           name: run tests
@@ -53,15 +51,13 @@ jobs:
       - store_artifacts:
           path: test-reports
           destination: test-reports
+
   test-3.7:
     <<: *test-template
     docker:
       - image: circleci/python:3.7
-    environment:
-      PYTHON_VERSION: 3.7
+
   test-2.7:
     <<: *test-template
     docker:
       - image: circleci/python:2.7
-    environment:
-      PYTHON_VERSION: 2.7
