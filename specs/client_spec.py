@@ -5,7 +5,11 @@ import logging
 from expects import expect, raise_error
 import os
 import base64
-import urllib.parse
+
+try:
+    from urllib.parse import quote_plus
+except:
+    from six.moves.urllib.parse import quote as quote_plus
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -41,7 +45,7 @@ with description('A new CS client'):
             with it('must work as expected'):
                 with spec_VCR.use_cassette('signature_start.yaml'):
                     with open(ATTACHMENTS_PATH + "/dummy.pdf", "rb") as pdf:
-                        encoded_pdf = urllib.parse.quote_plus(base64.b64encode(pdf.read()))
+                        encoded_pdf = quote_plus(base64.b64encode(pdf.read()))
 
                     data = {
                         "config_id": 12345,
