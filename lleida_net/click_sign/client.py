@@ -118,15 +118,21 @@ class Signature(ClientResource):
         except Exception as e:
             raise NotValidSignatureSchemaException(str(e))
 
+    @property
+    def status(self, signatory_id):
+        assert isinstance(signatory_id, int), "signatory_id must be an integer"
 
-
+        try:
+            return self.api.post(resource="get_signatory_details", json={"signatory_id": signatory_id})
+        except Exception as e:
+            raise NotValidSignatureSchemaException(str(e))
 
 
 
 
 
 class Client(object):
-    
+
     def __init__(self, user=None, password=None, environment=None):
 
         # Handle the user
