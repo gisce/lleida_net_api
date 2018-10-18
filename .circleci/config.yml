@@ -20,7 +20,6 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "requirements.txt" }}-{{.Environment.PYTHON_VERSION}}
-          - v1-dependencies-
 
       - run:
           name: install dependencies
