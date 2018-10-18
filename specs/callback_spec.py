@@ -6,7 +6,7 @@ from expects import expect, raise_error
 from lleida_net.click_sign import serializers
 
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.CRITICAL)
 
 
 fixtures_path = 'specs/fixtures/callback/'

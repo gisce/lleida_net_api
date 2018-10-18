@@ -11,7 +11,7 @@ try:
 except:
     from six.moves.urllib.parse import quote as quote_plus
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.CRITICAL)
 
 from lleida_net.click_sign import Client, NotValidSignatureSchemaException, serializers as schema
 
@@ -109,4 +109,3 @@ with description('A new CS client'):
                     a_config = schema.ConfigSchema().load(config[0])
                     config_id = a_config.data.config_id
                     response = self.client.configuration.get_config(config_id)
-                    print (response)
