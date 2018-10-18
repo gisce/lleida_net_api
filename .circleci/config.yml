@@ -1,6 +1,14 @@
 version: 2
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-3.7
+      - test-3.6
+      - test-2.7
+
 jobs:
-  build:
+  test-3.6: &test-template
     docker:
       - image: circleci/python:3.6.1
 
@@ -17,7 +25,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python3 -m venv venv
+            python3 -m venv venv || virtualenv venv
             . venv/bin/activate
             pip install -r requirements.txt
             pip install -r requirements-dev.txt
@@ -43,4 +51,11 @@ jobs:
       - store_artifacts:
           path: test-reports
           destination: test-reports
-          
+  test-3.7:
+    <<: *test-template
+    docker:
+      - image: circleci/python:3.7-jessie
+  test-2.7:
+    <<: *test-template
+    docker:
+      - image: circleci/python:2.7-jessie
