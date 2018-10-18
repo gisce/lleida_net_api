@@ -127,11 +127,21 @@ class CS_API(object):
         # Prepare base request API params (user, password, request)
         # see https://api.clickandsign.eu/dtd/clickandsign/v1/es/index.html#overview
 
+        """
         kwargs['json'] = {
             **kwargs.get('json', {}),
             **self.credentials,
             'request': resource.upper(),
         }
+        """
+
+        kwargs['json'] = kwargs.get(u'json', {})
+        kwargs['json'].update(
+            **self.credentials
+        )
+        kwargs['json'].update(
+            {'request': resource.upper()}
+        )
 
         response = self.session.request(method=method, url=url, **kwargs)
         response_content = response.json()

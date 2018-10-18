@@ -1,6 +1,10 @@
+from __future__ import (division, absolute_import, print_function, unicode_literals)
+
+from six.moves import urllib
+
+
 import os
 import base64
-import urllib.parse
 
 from lleida_net.click_sign import Client, NotValidSignatureSchemaException
 from marshmallow import pprint
@@ -10,9 +14,14 @@ logging.basicConfig(level=logging.DEBUG)
 
 ATTACHMENTS_PATH = os.path.dirname(os.path.realpath(__file__)) + "/../specs/attachments"
 
-client = Client()
+config = {
+    'user': 'USER',
+    'password': 'PASSWORD',
+    'environment': 'prod'
+}
+client = Client(**config)
 
-with open(ATTACHMENTS_PATH + "/contract.pdf", "rb") as pdf:
+with open(ATTACHMENTS_PATH + "/dummy.pdf", "rb") as pdf:
     encoded_pdf = urllib.parse.quote_plus(base64.b64encode(pdf.read()))
 
 data = {
