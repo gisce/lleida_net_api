@@ -90,8 +90,7 @@ with description('A new CS client'):
 
             with it('must work as expected'):
                 with spec_VCR.use_cassette('signature_status.yaml'):
-                    response = self.client.signature.list
-                    # response = self.client.signature.status(signatory_id)
+                    response = self.client.signature.status(test_config.signatory_id)
                     assert response
 
 
