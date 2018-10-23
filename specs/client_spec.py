@@ -25,17 +25,10 @@ spec_VCR = vcr.VCR(
     cassette_library_dir=fixtures_path
 )
 
-config = {
-    'user': 'user',
-    'password': 'key',
-    'environment': 'prod'
-}
-
 with description('A new CS client'):
     with before.each:
         with spec_VCR.use_cassette('init.yaml'):
-            self.config = config
-            self.client = Client(**config)
+            # self.client = Client(**test_config.credentials)
 
     with context('initialization'):
         with it('must be performed as expected'):
