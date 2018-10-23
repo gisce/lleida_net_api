@@ -123,6 +123,11 @@ class Signature(ClientResource):
             raise NotValidSignatureSchemaException(str(e))
 
     def status(self, signatory_id):
+        """
+        It tries to reach the status of an already started signature.
+
+        If not, raises an exception
+        """
         assert isinstance(signatory_id, int), "signatory_id must be an integer"
 
         try:

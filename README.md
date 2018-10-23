@@ -94,4 +94,8 @@ If not, raises an exception
 print (self.client.signature.status(signatory_id=555))
 
 {'signatory_email': 'xtorello@gisce.net', 'signatory_status': '6', 'signatory_status_date': '1540284984', 'signatory_id': 555}
+
+
+print (self.client.signature.status(signatory_id=-1))
+NotFoundSignatureException
 ```
