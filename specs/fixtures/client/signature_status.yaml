@@ -29,4 +29,34 @@ interactions:
       Vary: [Accept]
       X-Content-Type-Options: [nosniff]
     status: {code: 200, message: ''}
+- request:
+    body: '{"signatory_id": 15402849840400000, "user": "user", "password": "password",
+      "request": "GET_SIGNATORY_DETAILS"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['111']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.clickandsign.eu/cs/get_signatory_details
+  response:
+    body: {string: '{"signatory_details":{"signatory_id":"15402849840400000","sms":[],"signatory_status_date":"1540284984","ip":"0","signatory_email":"xtorello@gisce.net","otp_tries":"0","email":[{"to":"xtorello@gisce.net","type":"start","status_date":"1540285065","bcc":"","attachments":[],"sending_date":"1540284984","registered":"N","status":"sent","cc":""}],"signature_id":"15402849840400000","signature_start_date":"1540284984","signatory_status":"6","signatory_phone":"+34666666666","signatory_url_redirect":"","level":"0","signatory_evidence_generated":"N"},"status":"Success","request":"GET_SIGNATORY_DETAILS","request_id":34470956,"code":200}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Headers: ['*']
+      Access-Control-Allow-Methods: ['POST, GET, OPTIONS, DELETE, PUT, HEAD, PATCH,
+          TRACE']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Max-Age: ['1209600']
+      Cache-Control: ['no-store, no-cache, must-revalidate']
+      Connection: [close]
+      Content-Disposition: [inline; filename="response.txt"]
+      Content-type: [text/plain;charset=utf-8]
+      Pragma: [no-cache]
+      Server: ['']
+      Vary: [Accept]
+      X-Content-Type-Options: [nosniff]
+    status: {code: 200, message: ''}
 version: 1
