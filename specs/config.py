@@ -1,2 +1,5 @@
-config_id = 984
-# config_id = 445
+from munch import Munch
+
+config = Munch({
+    'config_id': 984,
+})
