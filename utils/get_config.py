@@ -20,4 +20,4 @@ print (config_id_list)
 ## Fetch config details
 print ("Fetching config details for '{}'".format(config_id))
 response = client.configuration.get_config(config_id)
-# pprint (response, indent=2)
+pprint (response, indent=2)
