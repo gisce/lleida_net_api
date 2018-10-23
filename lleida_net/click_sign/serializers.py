@@ -162,6 +162,7 @@ class ConfigInfoSchema(Schema):
     color_text = fields.Str()
     color_button_background = fields.Str()
     color_button_text = fields.Str()
+    # logo = fields.Str()
     logo = fields.Integer()
     status = fields.Str()
     signatory_fields = fields.List(fields.Str())
