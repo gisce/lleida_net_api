@@ -5,7 +5,7 @@ import logging
 from expects import expect, raise_error
 import os
 import base64
-from .config import config_id
+from .config import config as test_config
 
 
 try:
@@ -50,7 +50,7 @@ with description('A new CS client'):
                         encoded_pdf = quote_plus(base64.b64encode(pdf.read()))
 
                     data = {
-                        "config_id": config_id,
+                        "config_id": test_config.config_id,
                         "contract_id": "ContractID",
                         "level": [
                             {
