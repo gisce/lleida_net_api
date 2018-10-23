@@ -75,7 +75,6 @@ with description('A new CS client'):
                     }
 
                     response = self.client.signature.start(data)
-                    print (response)
                     assert not response.error
 
             with it('must handle incorrect signature definitions'):
@@ -96,7 +95,6 @@ with description('A new CS client'):
             with it('must work as expected'):
                 with spec_VCR.use_cassette('signature_status.yaml'):
                     response = self.client.signature.list
-                    print (response)
                     # response = self.client.signature.status(signatory_id)
                     assert response
 
