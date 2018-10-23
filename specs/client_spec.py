@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
-from __future__ import (absolute_import)
+from __future__ import (division, absolute_import, print_function, unicode_literals)
 import vcr
 import logging
 from expects import expect, raise_error
 import os
 import base64
-from .config import config as test_config
-
+try:
+    from .config import config as test_config
+except:
+    specs_path = os.path.dirname(os.path.abspath(__file__))
+    os.sys.path.append(specs_path)
+    from config import config as test_config
 
 try:
     from urllib.parse import quote_plus
