@@ -88,6 +88,7 @@ with description('A new CS client'):
                     expect(incorrect_signature_start).to(raise_error(NotValidSignatureSchemaException))
 
 
+        with context('status'):
             with it('must work as expected'):
                 with spec_VCR.use_cassette('signature_status.yaml'):
                     response = self.client.signature.status(test_config.signatory_id)
