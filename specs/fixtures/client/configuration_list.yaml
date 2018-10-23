@@ -11,10 +11,12 @@ interactions:
     method: POST
     uri: https://api.clickandsign.eu/cs/get_config_list
   response:
-    body: {string: '{"config":[{"config_id":"445","name":"Button signature","status":"enabled"},{"config_id":"446","name":"SMS
-        code signature","status":"enabled"},{"config_id":"447","name":"SMS code and
-        Handwritten signature","status":"enabled"},{"config_id":"476","name":"Button
-        signature","status":"enabled"},{"config_id":"478","name":"Button signature","status":"enabled"}],"request":"GET_CONFIG_LIST","code":200,"request_id":18518943,"status":"Success"}'}
+    body: {string: '{"config":[{"status":"enabled","name":"Button signature","config_id":"445"},{"status":"enabled","name":"SMS
+        code signature","config_id":"446"},{"status":"enabled","name":"SMS code and
+        Handwritten signature","config_id":"447"},{"status":"enabled","name":"Button
+        signature","config_id":"476"},{"status":"enabled","name":"Button signature","config_id":"478"},{"status":"enabled","name":"Firma
+        API ES","config_id":"976"},{"status":"enabled","name":"Firma API ES","config_id":"978"},{"status":"enabled","name":"Firma
+        API ES","config_id":"979"},{"status":"enabled","name":"Firma API ES","config_id":"984"}],"request_id":69352471,"status":"Success","code":200,"request":"GET_CONFIG_LIST"}'}
     headers:
       Access-Control-Allow-Credentials: ['true']
       Access-Control-Allow-Headers: ['*']
@@ -43,20 +45,20 @@ interactions:
     method: POST
     uri: https://api.clickandsign.eu/cs/get_config
   response:
-    body: {string: "{\"status\":\"Success\",\"config_id\":\"445\",\"request_id\":72534318,\"code\":200,\"config\":{\"landing\":{\"landing_template\":\"\",\"default_url_redirect\":\"\",\"signature_type\":\"on_sign\",\"signature_on_sign_required_elements\":{\"handwritten\":\"N\",\"otp_length\":\"6\",\"otp_max_retries\":\"3\",\"otp_sending\":\"on_landing\",\"otp\":\"N\"},\"url_redirect_delay\":\"-1\"},\"name\":\"Button
-        signature\",\"signature_cb_url\":\"\",\"color_background\":\"\",\"registered_company_vat_number\":\"B55314041\",\"email\":[{\"body_template\":\"\",\"attachment_file_group\":[],\"reminder_lapse\":\"0\",\"subject\":\"Tienes
-        un nuevo documento para firmar\",\"registered\":\"Y\",\"bcc\":\"\",\"cc\":\"\",\"from_name\":\"COMPANY
-        S.L.\",\"to\":\"SIGNATORY\",\"body_free_text\":\"\",\"type\":\"start\"},{\"body_template\":\"\",\"attachment_file_group\":[\"SIGNATORY_STAMP\",\"SIGNATORY_EVIDENCE\"],\"reminder_lapse\":\"0\",\"subject\":\"\xA1Felicidades!
-        Tu documento ha sido firmado\",\"registered\":\"N\",\"bcc\":\"\",\"cc\":\"\",\"from_name\":\"COMPANY
-        S.L.\",\"to\":\"SIGNATORY\",\"body_free_text\":\"\",\"type\":\"signed\"},{\"body_template\":\"\",\"attachment_file_group\":[],\"reminder_lapse\":\"0\",\"subject\":\"\xA1Felicidades!
-        Tu documento ha sido firmado\",\"registered\":\"N\",\"bcc\":\"\",\"cc\":\"\",\"from_name\":\"COMPANY
-        S.L.\",\"to\":\"SIGNATORY\",\"body_free_text\":\"\",\"type\":\"end_ok\"},{\"body_template\":\"\",\"attachment_file_group\":[],\"reminder_lapse\":\"0\",\"subject\":\"No
-        ha sido posible firmar el documento\",\"registered\":\"N\",\"bcc\":\"\",\"cc\":\"\",\"from_name\":\"COMPANY
-        S.L.\",\"to\":\"SIGNATORY\",\"body_free_text\":\"\",\"type\":\"end_ko\"},{\"body_template\":\"\",\"attachment_file_group\":[],\"reminder_lapse\":\"0\",\"subject\":\"El
-        documento para firmar ha expirado\",\"registered\":\"N\",\"bcc\":\"\",\"cc\":\"\",\"from_name\":\"COMPANY
-        S.L.\",\"to\":\"SIGNATORY\",\"body_free_text\":\"\",\"type\":\"expired\"}],\"registered_company_name\":\"COMPANY
-        S.L.\",\"registered_langs\":\"ES\",\"sms\":[],\"logo_url\":\"https://admin.clickandsign.eu/pdf/2231782qw8a7dasd87ads87-\",\"lang\":\"ES\",\"color_button_text\":\"\",\"status\":\"enabled\",\"signatory_tags\":[],\"color_button_background\":\"\",\"expire_lapse\":\"720\",\"color_text\":\"\",\"auto_cancel\":\"N\",\"signatory_cb_url\":\"\",\"default_sms_sender\":\"Click&Sign\",\"logo\":25886,\"default_email_from_name\":\"COMPANY
-        S.L.\"},\"request\":\"GET_CONFIG\"}"}
+    body: {string: "{\"config\":{\"color_background\":\"\",\"auto_cancel\":\"N\",\"signatory_tags\":[],\"default_sms_sender\":\"Click&Sign\",\"color_text\":\"\",\"logo\":25886,\"status\":\"enabled\",\"color_button_text\":\"\",\"name\":\"Button
+        signature\",\"color_button_background\":\"\",\"lang\":\"ES\",\"expire_lapse\":\"720\",\"registered_langs\":\"ES\",\"registered_company_name\":\"COMPANY
+          S.L.\",\"sms\":[],\"default_email_from_name\":\"COMPANY
+         S.L.\",\"landing\":{\"signature_on_sign_required_elements\":{\"otp_length\":\"6\",\"otp_max_retries\":\"3\",\"handwritten\":\"N\",\"otp\":\"N\",\"otp_sending\":\"on_landing\"},\"landing_template\":\"\",\"url_redirect_delay\":\"-1\",\"signature_type\":\"on_sign\",\"default_url_redirect\":\"\"},\"registered_company_vat_number\":\"B55314041\",\"signatory_cb_url\":\"\",\"logo_url\":\"https://admin.clickandsign.eu/pdf/fakeUrl-\",\"email\":[{\"reminder_lapse\":\"0\",\"registered\":\"Y\",\"cc\":\"\",\"bcc\":\"\",\"subject\":\"Tienes
+        un nuevo documento para firmar\",\"body_free_text\":\"\",\"body_template\":\"\",\"attachment_file_group\":[],\"from_name\":\"COMPANY
+          S.L.\",\"type\":\"start\",\"to\":\"SIGNATORY\"},{\"reminder_lapse\":\"0\",\"registered\":\"N\",\"cc\":\"\",\"bcc\":\"\",\"subject\":\"\xA1Felicidades!
+        Tu documento ha sido firmado\",\"body_free_text\":\"\",\"body_template\":\"\",\"attachment_file_group\":[\"SIGNATORY_STAMP\",\"SIGNATORY_EVIDENCE\"],\"from_name\":\"COMPANY
+          S.L.\",\"type\":\"signed\",\"to\":\"SIGNATORY\"},{\"reminder_lapse\":\"0\",\"registered\":\"N\",\"cc\":\"\",\"bcc\":\"\",\"subject\":\"\xA1Felicidades!
+        Tu documento ha sido firmado\",\"body_free_text\":\"\",\"body_template\":\"\",\"attachment_file_group\":[],\"from_name\":\"COMPANY
+          S.L.\",\"type\":\"end_ok\",\"to\":\"SIGNATORY\"},{\"reminder_lapse\":\"0\",\"registered\":\"N\",\"cc\":\"\",\"bcc\":\"\",\"subject\":\"No
+        ha sido posible firmar el documento\",\"body_free_text\":\"\",\"body_template\":\"\",\"attachment_file_group\":[],\"from_name\":\"COMPANY
+          S.L.\",\"type\":\"end_ko\",\"to\":\"SIGNATORY\"},{\"reminder_lapse\":\"0\",\"registered\":\"N\",\"cc\":\"\",\"bcc\":\"\",\"subject\":\"El
+        documento para firmar ha expirado\",\"body_free_text\":\"\",\"body_template\":\"\",\"attachment_file_group\":[],\"from_name\":\"COMPANY
+          S.L.\",\"type\":\"expired\",\"to\":\"SIGNATORY\"}],\"signature_cb_url\":\"\"},\"status\":\"Success\",\"config_id\":\"445\",\"request_id\":52982131,\"request\":\"GET_CONFIG\",\"code\":200}"}
     headers:
       Access-Control-Allow-Credentials: ['true']
       Access-Control-Allow-Headers: ['*']

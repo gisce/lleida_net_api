@@ -1,17 +1,18 @@
 interactions:
 - request:
-    body: '{"user": "unnamed", "password": "unnamed", "request": "GET_CONFIG_LIST"}'
+    body: '{"start_date": 1517443200, "user": "user", "password": "password", "request":
+      "GET_SIGNATURE_LIST"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['72']
+      Content-Length: ['99']
       Content-Type: [application/json]
       User-Agent: [python-requests/2.19.1]
     method: POST
-    uri: https://api.clickandsign.eu/cs/get_config_list
+    uri: https://api.clickandsign.eu/cs/get_signature_list
   response:
-    body: {string: '{"code":1600,"status":"Invalid user","request_id":93262021,"request":"GET_CONFIG_LIST"}'}
+    body: {string: '{"status":"Success","signature":[],"request_id":62853732,"request":"GET_SIGNATURE_LIST","code":200}'}
     headers:
       Access-Control-Allow-Credentials: ['true']
       Access-Control-Allow-Headers: ['*']
