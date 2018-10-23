@@ -24,6 +24,10 @@ class NotValidConfigurationSchemaException(NotValidSchemaException):
     """Configuration data is not valid"""
     pass
 
+class NotFoundSignatureException(ClientException):
+    """signatory_id requested not exists"""
+    pass
+
 
 class ClientResource(object):
 
@@ -132,7 +136,7 @@ class Signature(ClientResource):
         if not validated_response.errors and validated_response.data.result.signatory_details:
             return validated_response.data.result.signatory_details
 
-        raise NotValidSignatureSchemaException(str(e))
+        raise NotFoundSignatureException()
 
 
 
