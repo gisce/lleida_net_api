@@ -15,7 +15,7 @@ except:
 
 logging.basicConfig(level=logging.CRITICAL)
 
-from lleida_net.click_sign import Client, NotValidSignatureSchemaException, serializers as schema
+from lleida_net.click_sign import Client, NotValidSignatureSchemaException, NotFoundSignatureException, serializers as schema
 
 
 ATTACHMENTS_PATH = os.path.dirname(os.path.realpath(__file__)) + "/attachments"
@@ -94,6 +94,13 @@ with description('A new CS client'):
                     response = self.client.signature.status(test_config.signatory_id)
                     assert response
 
+            with it('must handle non-existent signatory_ids'):
+                with spec_VCR.use_cassette('signature_status_incorrect.yaml'):
+
+                    def incorrect_signature_status():
+                        response = self.client.signature.status(-5)
+
+                    expect(incorrect_signature_status).to(raise_error(NotFoundSignatureException))
 
     with context('Configuration'):
             with it('must handle config lists'):

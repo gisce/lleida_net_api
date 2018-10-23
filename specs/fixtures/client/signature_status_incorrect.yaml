@@ -1,0 +1,33 @@
+interactions:
+- request:
+    body: '{"signatory_id": -5, "user": "user", "password": "password", "request":
+      "GET_SIGNATORY_DETAILS"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['96']
+      Content-Type: [application/json]
+      User-Agent: [python-requests/2.19.1]
+    method: POST
+    uri: https://api.clickandsign.eu/cs/get_signatory_details
+  response:
+    body: {string: '{"code":1603,"signatory_details":{},"request":"GET_SIGNATORY_DETAILS","status":"Invalid
+        id","request_id":34260880}'}
+    headers:
+      Access-Control-Allow-Credentials: ['true']
+      Access-Control-Allow-Headers: ['*']
+      Access-Control-Allow-Methods: ['POST, GET, OPTIONS, DELETE, PUT, HEAD, PATCH,
+          TRACE']
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Max-Age: ['1209600']
+      Cache-Control: ['no-store, no-cache, must-revalidate']
+      Connection: [close]
+      Content-Disposition: [inline; filename="response.txt"]
+      Content-type: [text/plain;charset=utf-8]
+      Pragma: [no-cache]
+      Server: ['']
+      Vary: [Accept]
+      X-Content-Type-Options: [nosniff]
+    status: {code: 200, message: ''}
+version: 1
