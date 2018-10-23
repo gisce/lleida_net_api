@@ -24,6 +24,10 @@ class NotValidConfigurationSchemaException(NotValidSchemaException):
     """Configuration data is not valid"""
     pass
 
+class NotFoundSignatureException(ClientException):
+    """signatory_id requested not exists"""
+    pass
+
 
 class ClientResource(object):
 
@@ -111,9 +115,38 @@ class Signature(ClientResource):
         else:
             raise NotValidSignatureSchemaException(signature_schema.errors)
 
+    @property
+    def list(self):
+        try:
+            return self.api.post(resource="get_signature_list", json={ "start_date": 1517443200})
+        except Exception as e:
+            raise NotValidSignatureSchemaException(str(e))
+
+    def status(self, signatory_id):
+        """
+        It tries to reach the status of an already started signature.
+
+        If not, raises an exception
+        """
+        assert isinstance(signatory_id, int), "signatory_id must be an integer"
+
+        try:
+            response = self.api.post(resource="get_signatory_details", json={"signatory_id": signatory_id})
+            validated_response = schema.StatusSignatureSchema().load(response)
+
+        except Exception as e:
+            raise NotValidSignatureSchemaException(str(e))
+
+
+        if not validated_response.errors and validated_response.data.result.signatory_details:
+            return validated_response.data.result.signatory_details
+
+        raise NotFoundSignatureException()
+
 
 
 class Client(object):
+
     def __init__(self, user=None, password=None, environment=None):
 
         # Handle the user

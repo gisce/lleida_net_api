@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
-from __future__ import (absolute_import)
+from __future__ import (division, absolute_import, print_function, unicode_literals)
 import vcr
 import logging
 from expects import expect, raise_error
 import os
 import base64
+try:
+    from .config import config as test_config
+except:
+    specs_path = os.path.dirname(os.path.abspath(__file__))
+    os.sys.path.append(specs_path)
+    from config import config as test_config
 
 try:
     from urllib.parse import quote_plus
@@ -13,7 +19,7 @@ except:
 
 logging.basicConfig(level=logging.CRITICAL)
 
-from lleida_net.click_sign import Client, NotValidSignatureSchemaException, serializers as schema
+from lleida_net.click_sign import Client, NotValidSignatureSchemaException, NotFoundSignatureException, serializers as schema
 
 
 ATTACHMENTS_PATH = os.path.dirname(os.path.realpath(__file__)) + "/attachments"
@@ -23,17 +29,10 @@ spec_VCR = vcr.VCR(
     cassette_library_dir=fixtures_path
 )
 
-config = {
-    'user': 'user',
-    'password': 'key',
-    'environment': 'prod'
-}
-
 with description('A new CS client'):
     with before.each:
         with spec_VCR.use_cassette('init.yaml'):
-            self.config = config
-            self.client = Client(**config)
+            self.client = Client(**test_config.credentials)
 
     with context('initialization'):
         with it('must be performed as expected'):
@@ -48,7 +47,7 @@ with description('A new CS client'):
                         encoded_pdf = quote_plus(base64.b64encode(pdf.read()))
 
                     data = {
-                        "config_id": 12345,
+                        "config_id": test_config.config_id,
                         "contract_id": "ContractID",
                         "level": [
                             {
@@ -56,7 +55,7 @@ with description('A new CS client'):
                                 "signatories": [
                                     {
                                         "phone": "+34666666666",
-                                        "email": "signatory1@mail.com",
+                                        "email": "xtorello@gisce.net",
                                         "name": "Name1",
                                         "surname": "Surname1"
                                     },
@@ -73,7 +72,10 @@ with description('A new CS client'):
                     }
 
                     response = self.client.signature.start(data)
-                    assert response
+                    assert not response.error
+
+                    signatory_id = response.result['signature']['signatories'][0]['signatory_id']
+                    assert signatory_id == test_config.signatory_id
 
             with it('must handle incorrect signature definitions'):
                 with spec_VCR.use_cassette('signature_start.yaml'):
@@ -88,6 +90,21 @@ with description('A new CS client'):
                         response = self.client.signature.start(data)
 
                     expect(incorrect_signature_start).to(raise_error(NotValidSignatureSchemaException))
+
+
+        with context('status'):
+            with it('must work as expected'):
+                with spec_VCR.use_cassette('signature_status.yaml'):
+                    response = self.client.signature.status(test_config.signatory_id)
+                    assert response
+
+            with it('must handle non-existent signatory_ids'):
+                with spec_VCR.use_cassette('signature_status_incorrect.yaml'):
+
+                    def incorrect_signature_status():
+                        response = self.client.signature.status(-5)
+
+                    expect(incorrect_signature_status).to(raise_error(NotFoundSignatureException))
 
     with context('Configuration'):
             with it('must handle config lists'):

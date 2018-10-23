@@ -40,6 +40,7 @@ class APIResponseSchema(Schema):
     code = fields.Integer(required=True)
     error = fields.Boolean(required=True)
     result = fields.Dict(required=True)
+    # result = fields.Nested(ResponseSchema, many=False, required=True)
     message = fields.Str(required=False)
 
     @post_load
@@ -104,6 +105,37 @@ class StartSignatureSchema(ResponseSchema):
         return Objectify(**data)
 
 
+"""
+Signature Status
+"""
+
+class StatusSchema(Schema):
+    signatory_id = fields.Integer(required=True)
+    signatory_status_date = fields.Str(required=True)
+    signatory_email = fields.Str(required=True)
+    signatory_status = fields.Str(required=True)
+
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
+
+class APIResponseStatusSchema(ResponseSchema):
+    signatory_details = fields.Nested(StatusSchema, many=False, required=True)
+
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
+
+
+class StatusSignatureSchema(APIResponseSchema):
+    result = fields.Nested(APIResponseStatusSchema, many=False, required=True)
+
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
+
+
+
 
 """
 Configuration
@@ -162,6 +194,7 @@ class ConfigInfoSchema(Schema):
     color_text = fields.Str()
     color_button_background = fields.Str()
     color_button_text = fields.Str()
+    # logo = fields.Str()
     logo = fields.Integer()
     status = fields.Str()
     signatory_fields = fields.List(fields.Str())

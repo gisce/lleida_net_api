@@ -48,6 +48,7 @@ Section desired to manage the Signatures.
 Available methods:
 
 - [start](#signature-start)
+- [status](#signature-status)
 
 #### Signature.Start
 
@@ -80,4 +81,21 @@ data = {
 }
 
 self.client.signature.start(data)
+```
+
+
+#### Signature.Status
+
+It tries to reach the status of an already started signature.
+
+If not, raises an exception
+
+```
+print (self.client.signature.status(signatory_id=555))
+
+{'signatory_email': 'xtorello@gisce.net', 'signatory_status': '6', 'signatory_status_date': '1540284984', 'signatory_id': 555}
+
+
+print (self.client.signature.status(signatory_id=-1))
+NotFoundSignatureException
 ```
