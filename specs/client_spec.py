@@ -28,7 +28,7 @@ spec_VCR = vcr.VCR(
 with description('A new CS client'):
     with before.each:
         with spec_VCR.use_cassette('init.yaml'):
-            # self.client = Client(**test_config.credentials)
+            self.client = Client(**test_config.credentials)
 
     with context('initialization'):
         with it('must be performed as expected'):
