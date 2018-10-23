@@ -118,16 +118,21 @@ class Signature(ClientResource):
         except Exception as e:
             raise NotValidSignatureSchemaException(str(e))
 
-    @property
     def status(self, signatory_id):
         assert isinstance(signatory_id, int), "signatory_id must be an integer"
 
         try:
-            return self.api.post(resource="get_signatory_details", json={"signatory_id": signatory_id})
+            response = self.api.post(resource="get_signatory_details", json={"signatory_id": signatory_id})
+            validated_response = schema.StatusSignatureSchema().load(response)
+
         except Exception as e:
             raise NotValidSignatureSchemaException(str(e))
 
 
+        if not validated_response.errors and validated_response.data.result.signatory_details:
+            return validated_response.data.result.signatory_details
+
+        raise NotValidSignatureSchemaException(str(e))
 
 
 
