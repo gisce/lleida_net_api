@@ -47,8 +47,8 @@ Section desired to manage the Signatures.
 
 Available methods:
 
-- [start](#signature-start)
-- [status](#signature-status)
+- [start](#signaturestart)
+- [status](#signaturestatus)
 
 #### Signature.Start
 
