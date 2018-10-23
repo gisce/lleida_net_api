@@ -77,6 +77,9 @@ with description('A new CS client'):
                     response = self.client.signature.start(data)
                     assert not response.error
 
+                    signatory_id = response.result['signature']['signatories'][0]['signatory_id']
+                    assert signatory_id == test_config.signatory_id
+
             with it('must handle incorrect signature definitions'):
                 with spec_VCR.use_cassette('signature_start.yaml'):
 
