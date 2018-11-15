@@ -167,7 +167,7 @@ class Signature(ClientResource):
 
     def get_document_evidence(self, data):
         """
-        It tries to reach the signatory stamp of an already signed signature.
+        It tries to reach the signatory evidence of an already signed signature.
         If not, raises an exception
         """
         assert isinstance(data, dict), "Data must be a dict"
