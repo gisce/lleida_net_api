@@ -90,7 +90,8 @@ class SignatureSchema(Schema):
     config_id = fields.Integer(required=True)
     contract_id = fields.Str(required=True)
     level = fields.Nested(LevelSchema, many=True, required=True)
-    file_doc = fields.Nested(FileSchema, many=True, load_from="file")
+    file_doc = fields.Nested(
+        FileSchema, many=True, dump_to='file', attribute='file')
 
     @post_load
     def create_model(self, data):
