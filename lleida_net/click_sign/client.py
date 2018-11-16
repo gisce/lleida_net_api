@@ -28,6 +28,22 @@ class NotFoundSignatureException(ClientException):
     """signatory_id requested not exists"""
     pass
 
+class NotFoundSignatoryEvidenceException(ClientException):
+    """Signatory Evidence requested not exists"""
+    pass
+
+class NotFoundSignatoryStampException(ClientException):
+    """Signatory Stamp requested not exists"""
+    pass
+
+class NotFoundValidSignatoryEvidenceException(ClientException):
+    """Signatory Evidence requested is not valid"""
+    pass
+
+class NotFoundValidSignatoryStampException(ClientException):
+    """Signatory Evidence requested is not valid"""
+    pass
+
 
 class ClientResource(object):
 
@@ -158,12 +174,12 @@ class Signature(ClientResource):
             validated_response = schema.GetDocumentSchema().load(response)
 
         except Exception as e:
-            raise NotValidSignatureSchemaException(str(e))
+            raise NotFoundSignatoryStampException(str(e))
 
         if not validated_response.errors and validated_response.data.result.document:
             return validated_response.data.result.document
 
-        raise NotFoundSignatureException()
+        raise NotFoundValidSignatoryStampException()
 
     def get_document_evidence(self, data):
         """
@@ -180,12 +196,12 @@ class Signature(ClientResource):
             validated_response = schema.GetDocumentSchema().load(response)
 
         except Exception as e:
-            raise NotValidSignatureSchemaException(str(e))
+            raise NotFoundSignatoryEvidenceException(str(e))
 
         if not validated_response.errors and validated_response.data.result.document:
             return validated_response.data.result.document
 
-        raise NotFoundSignatureException()
+        raise NotFoundValidSignatoryEvidenceException()
 
 
 class Client(object):
