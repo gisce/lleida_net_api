@@ -90,7 +90,7 @@ class SignatureSchema(Schema):
     config_id = fields.Integer(required=True)
     contract_id = fields.Str(required=True)
     level = fields.Nested(LevelSchema, many=True, required=True)
-    file = fields.Nested(FileSchema, many=True)
+    file_doc = fields.Nested(FileSchema, many=True, load_from="file")
 
     @post_load
     def create_model(self, data):
@@ -134,6 +134,50 @@ class StatusSignatureSchema(APIResponseSchema):
     def create_model(self, data):
         return Objectify(**data)
 
+
+class SignatoryStampSchema(Schema):
+    signatory_id = fields.Integer(required=True)
+    signature_id = fields.Str(required=True)  # Api defines this as a String...
+    file_group = fields.Str(required=True)
+
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
+
+
+class GetDocument(Schema):
+    content = fields.Str(required=True)
+    filename = fields.Str(required=True)
+    file_url = fields.Str(required=True)
+
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
+
+
+class APIResponseGetDocument(Schema):
+    file_doc = fields.List(
+        fields.Nested(GetDocument), many=True, required=True, load_from="file")
+
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
+
+
+class APIFile(Schema):
+    document = fields.Nested(APIResponseGetDocument, many=False, required=True)
+
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
+
+
+class GetDocumentSchema(APIResponseSchema):
+    result = fields.Nested(APIFile, many=False, required=True)
+
+    @post_load
+    def create_model(self, data):
+        return Objectify(**data)
 
 
 

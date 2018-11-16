@@ -28,6 +28,22 @@ class NotFoundSignatureException(ClientException):
     """signatory_id requested not exists"""
     pass
 
+class NotFoundSignatoryEvidenceException(ClientException):
+    """Signatory Evidence requested not exists"""
+    pass
+
+class NotFoundSignatoryStampException(ClientException):
+    """Signatory Stamp requested not exists"""
+    pass
+
+class NotFoundValidSignatoryEvidenceException(ClientException):
+    """Signatory Evidence requested is not valid"""
+    pass
+
+class NotFoundValidSignatoryStampException(ClientException):
+    """Signatory Evidence requested is not valid"""
+    pass
+
 
 class ClientResource(object):
 
@@ -143,6 +159,49 @@ class Signature(ClientResource):
 
         raise NotFoundSignatureException()
 
+    def get_document_stamp(self, data):
+        """
+        It tries to reach the signatory stamp of an already signed signature.
+        If not, raises an exception
+        """
+        assert isinstance(data, dict), "Data must be a dict"
+        data['file_group'] = "SIGNATORY_STAMP"
+
+        try:
+            signatory_data = schema.SignatoryStampSchema().dump(data).data
+            response = self.api.post(
+                resource="get_document", json=signatory_data)
+            validated_response = schema.GetDocumentSchema().load(response)
+
+        except Exception as e:
+            raise NotFoundSignatoryStampException(str(e))
+
+        if not validated_response.errors and validated_response.data.result.document:
+            return validated_response.data.result.document
+
+        raise NotFoundValidSignatoryStampException()
+
+    def get_document_evidence(self, data):
+        """
+        It tries to reach the signatory evidence of an already signed signature.
+        If not, raises an exception
+        """
+        assert isinstance(data, dict), "Data must be a dict"
+        data['file_group'] = "SIGNATORY_EVIDENCE"
+
+        try:
+            signatory_data = schema.SignatoryStampSchema().dump(data).data
+            response = self.api.post(
+                resource="get_document", json=signatory_data)
+            validated_response = schema.GetDocumentSchema().load(response)
+
+        except Exception as e:
+            raise NotFoundSignatoryEvidenceException(str(e))
+
+        if not validated_response.errors and validated_response.data.result.document:
+            return validated_response.data.result.document
+
+        raise NotFoundValidSignatoryEvidenceException()
 
 
 class Client(object):
