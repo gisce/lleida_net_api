@@ -90,7 +90,7 @@ class SignatureSchema(Schema):
     config_id = fields.Integer(required=True)
     contract_id = fields.Str(required=True)
     level = fields.Nested(LevelSchema, many=True, required=True)
-    file = fields.Nested(FileSchema, many=True)
+    file_doc = fields.Nested(FileSchema, many=True, load_from="file")
 
     @post_load
     def create_model(self, data):
@@ -137,7 +137,7 @@ class StatusSignatureSchema(APIResponseSchema):
 
 class SignatoryStampSchema(Schema):
     signatory_id = fields.Integer(required=True)
-    signature_id = fields.Str(required=True)  # Api defines this as String...
+    signature_id = fields.Str(required=True)  # Api defines this as a String...
     file_group = fields.Str(required=True)
 
     @post_load
@@ -156,7 +156,8 @@ class GetDocument(Schema):
 
 
 class APIResponseGetDocument(Schema):
-    file = fields.List(fields.Nested(GetDocument), many=True, required=True)
+    file_doc = fields.List(
+        fields.Nested(GetDocument), many=True, required=True, load_from="file")
 
     @post_load
     def create_model(self, data):
