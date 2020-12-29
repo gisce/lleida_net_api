@@ -1,6 +1,6 @@
-# Lleida.net Click & Sign client
+# Lleida.net Click & Sign and SMS client
 
-It provides a Python client desired to interact with Lleida.net Click & Sign API.
+It provides a Python client desired to interact with Lleida.net Click & Sign API and SMS API.
 
 ## Usage
 
@@ -18,7 +18,12 @@ $ export CS_PASSWORD=my_password
 , and instantiate the Client without any parameter:
 
 ```
+# Click & Sign API
 from lleida_net.click_sign import Client
+client = Client()
+
+# SMS API
+from lleida_net.sms import Client
 client = Client()
 ```
 
@@ -39,7 +44,7 @@ client = Client(**config)
 ## Available sections
 
 - [Signature](#signature)
-
+- [SMS](#sms)
 
 ### Signature
 
@@ -98,4 +103,35 @@ print (self.client.signature.status(signatory_id=555))
 
 print (self.client.signature.status(signatory_id=-1))
 NotFoundSignatureException
+```
+
+### SMS
+
+#### Send SMS
+
+```
+from lleida_net.sms import Client                                                            
+config = {                                                                                   
+    'user': "my_user",                                                                
+    'password': "my_pass",                                                                
+}                                                                                            
+c = Client(**config)                                                                         
+headers = {'content-type': 'application/x-www-form-urlencoded', 'accept': 'application/json'}
+                                                                                             
+resposta = c.API.post(resource='',json={                                                     
+    "sms": {                                                                                 
+        "txt": "My sms message text",                                                                  
+        "dst": {                                                                             
+            "num": "+34600000000"                                                            
+        },                                                                                   
+        "src": "Your company name"                                                                 
+    }                                                                                        
+}, headers=headers)                                                                          
+```
+
+#### Response
+
+```
+resposta.result                                                                              
+{u'code': 200, u'newcredit': 93.0, u'request': u'sms', u'status': u'Success'}                
 ```

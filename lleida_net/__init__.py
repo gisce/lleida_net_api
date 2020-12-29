@@ -6,3 +6,4 @@ __author__ = 'GISCE-TI, S.L.'
 __version__ = '0.5.1'
 
 from . import click_sign
+from . import sms
