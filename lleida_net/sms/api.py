@@ -124,7 +124,6 @@ class SMS_API(object):
         Fetch the requested URL with the requested action through the Session (with injected credentials) and return a JSON representeation of the response with the resultant code
         """
         url = self.url + resource
-        import pudb;pu.db
         # Prepare base request API params (user, password, request)
         # see https://api.clickandsign.eu/dtd/clickandsign/v1/es/index.html#overview
 
@@ -195,7 +194,6 @@ class SMS_API(object):
         """
         POST method, it dispatch a session.get method consuming the desired resource
         """
-        import pudb;pu.db
         return self.method(method="POST", resource=resource, **kwargs)
 
 
