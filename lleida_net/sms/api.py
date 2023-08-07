@@ -8,7 +8,7 @@ from munch import Munch
 from ..click_sign import serializers
 
 api_url_envs = {
-        'prod':'http://api.lleida.net/sms/v2/',
+    'prod':'https://api.lleida.net/sms/v2/',
     # 'staging': None,
 }
 
