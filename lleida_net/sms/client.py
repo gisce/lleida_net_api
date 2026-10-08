@@ -206,7 +206,10 @@ class Signature(ClientResource):
 
 class Client(object):
 
-    def __init__(self, user=None, password=None, environment=None):
+    def __init__(
+            self, user=None, password=None, environment=None, api_key=None,
+            api_url=None, timeout=None, preserve_error_response=False,
+            capture_transport_errors=False):
 
         # Handle the user
         self.user = user
@@ -225,7 +228,16 @@ class Client(object):
         if environment:
             self.environment = environment
 
-        self.API = SMS_API(user=self.user, password=self.password, environment=self.environment)
+        self.API = SMS_API(
+            user=self.user,
+            password=self.password,
+            environment=self.environment,
+            api_key=api_key,
+            api_url=api_url,
+            timeout=timeout,
+            preserve_error_response=preserve_error_response,
+            capture_transport_errors=capture_transport_errors,
+        )
 
         # Prepare API resources
         self.signature = Signature(self.API)
