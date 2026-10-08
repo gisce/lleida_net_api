@@ -135,3 +135,29 @@ resposta = c.API.post(resource='',json={
 resposta.result                                                                              
 {u'code': 200, u'newcredit': 93.0, u'request': u'sms', u'status': u'Success'}                
 ```
+
+#### SMS API key mode (optional)
+
+The legacy `Client(user, password)` behavior remains unchanged. API key
+authentication, explicit timeouts and error payload preservation are opt-in:
+
+```python
+from lleida_net.sms import Client
+
+client = Client(
+    user='my_user',
+    password='my_api_key',
+    api_key='my_api_key',
+    api_url='https://api.lleida.net/sms/v2/',
+    timeout=15,
+    preserve_error_response=True,
+    capture_transport_errors=True,
+)
+```
+
+When `api_key` is provided, the client sends `Authorization: x-api-key ...`
+and no longer injects `password` into the SMS document. Existing callers that
+do not provide the new arguments keep the 0.6.2 request and response behavior.
+With `capture_transport_errors=True`, timeouts, request failures and invalid
+JSON responses are returned as error results with a `transport_error` value;
+without it, those exceptions keep being raised as in 0.6.2.

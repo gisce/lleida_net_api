@@ -76,7 +76,11 @@ api_url_envs = {
 
 class SMS_API(object):
 
-    def __init__(self, user=None, password=None, environment=None, **kwargs):
+    def __init__(
+            self, user=None, password=None, environment=None, api_key=None,
+            api_url=None, timeout=None, preserve_error_response=False,
+            capture_transport_errors=False,
+            **kwargs):
         logging.info("Initializing Lleida.net Click'n'Sign API")
 
         # Handle the user
@@ -101,7 +105,13 @@ class SMS_API(object):
                 assert kwargs['environment'] in api_url_envs.keys(), "Provided environment '{}' not recognized in defined api_url_envs {}".format(kwargs['environment'], str(FACE_ENVS.keys()))
                 self.environment = kwargs['environment']
 
-        self.url = api_url_envs[self.environment]
+        self.url = api_url or api_url_envs[self.environment]
+        if not self.url.endswith('/'):
+            self.url += '/'
+        self.api_key = api_key
+        self.timeout = timeout
+        self.preserve_error_response = preserve_error_response
+        self.capture_transport_errors = capture_transport_errors
 
         self.session = requests.Session()
 
@@ -111,10 +121,10 @@ class SMS_API(object):
         """
         Return current credentials dict
         """
-        return {
-            'user': self.user,
-            'password': self.password,
-        }
+        credentials = {'user': self.user}
+        if self.api_key is None:
+            credentials['password'] = self.password
+        return credentials
 
 
     def method(self, method, resource, download=False, **kwargs):
@@ -144,9 +154,37 @@ class SMS_API(object):
         )
         kwargs['headers'] = kwargs.get(u'headers', {})
         kwargs['headers'].update({'accept': 'application/json'})
+        if self.api_key is not None:
+            kwargs['headers'].setdefault(
+                'Authorization', 'x-api-key {}'.format(self.api_key)
+            )
+        if self.timeout is not None:
+            kwargs.setdefault('timeout', self.timeout)
 
-        response = self.session.request(method=method, url=url, **kwargs)
-        response_content = response.json()
+        try:
+            response = self.session.request(method=method, url=url, **kwargs)
+            response_content = response.json()
+        except requests.exceptions.Timeout as error:
+            if not self.capture_transport_errors:
+                raise
+            return Munch({
+                'code': None, 'error': True, 'result': {},
+                'message': str(error), 'transport_error': 'timeout',
+            })
+        except requests.exceptions.RequestException as error:
+            if not self.capture_transport_errors:
+                raise
+            return Munch({
+                'code': None, 'error': True, 'result': {},
+                'message': str(error), 'transport_error': 'request',
+            })
+        except ValueError as error:
+            if not self.capture_transport_errors:
+                raise
+            return Munch({
+                'code': None, 'error': True, 'result': {},
+                'message': str(error), 'transport_error': 'invalid_json',
+            })
 
         validate = serializers.ResponseSchema().load(response_content)
         assert not validate.errors, "There are some errors at the response of '{} {}': {}".format(method, resource, validate.errors)
@@ -164,7 +202,9 @@ class SMS_API(object):
             return Munch({
                 'code': response.status_code,
                 'error': True,
-                'result': {},
+                'result': (
+                    response_content if self.preserve_error_response else {}
+                ),
                 'message': str(response),
             })
         else:
@@ -172,7 +212,10 @@ class SMS_API(object):
                 return Munch({
                     'code': response_content['code'],
                     'error': True,
-                    'result': {},
+                    'result': (
+                        response_content
+                        if self.preserve_error_response else {}
+                    ),
                     'message': response_content['status'],
                 })
             else:
